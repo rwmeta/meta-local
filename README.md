@@ -6,6 +6,6 @@ Run and develop Meta app in your local computer
 
 ## Develop
 - Change code in src dir
-- run `python build.py`
-- run `docker-compose restart`
+- Run `python build.py`
+- Run `docker-compose restart`
 - Open http://localhost:8089/
