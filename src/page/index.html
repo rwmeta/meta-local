@@ -4,13 +4,145 @@ name: Index
 order: 1000
 menu_page_id: '1'
 +++
-<elem>
+<elem order="1">
     <template>
         <h2>Hello, World!</h2>
         <p>This is META - <b>faster</b> build web app <b>Business</b> applications enterprise level</p>
     </template>
 </elem>
 
-<script type="meta/sql" db-alias="todo" id="res">
+<script type="meta/sql" db-alias="todo" id="res" order="10" label="Test db query run successfully">
     SELECT NOW() as now_time, 'Hello from Dev DB!' as description
+
 </script>
+
+<elem span="6" states="default" order="200">
+    <template>
+        <form name="editGroupForm" ng-submit="changeState('save_editGroup', {employee:env.sp.group})">
+            <me-lego elems="editGroup.legoForm.elems" output="env.sp.group"></me-lego>
+        </form>
+    </template>
+    <script type="meta/js" id="editGroup" states="default">
+		function main(env, log, vm, pvm, MetaDatabaseService) {
+			vm.group = {};
+			vm.legoForm = {
+				elems: [
+					{
+						id: "name",
+						span: 6,
+						label: "Имя сотрудника",
+						help: 'Это имя будет отображаться на списках',
+						name: "me-input",
+						attrs: {
+							type: "text",
+							placeholder: 'Иван',
+							required: true,
+							min: 0,
+							max: 100
+						}
+					},
+					{
+						id: "type",
+						span: 6,
+						label: "Тип",
+						name: "me-input",
+						defaultValue: "2",
+						persistValueView: true,
+						attrs: {
+							type: "select",
+							options: [
+								{
+									id: "1",
+									name: "Менеджер"
+								},
+								{
+									id: "2",
+									name: "Программист"
+								},
+							]
+						}
+					},
+					{
+						name: "newrow"
+					},
+					{
+						id: "sort",
+						span: 6,
+						label: "Сортировка",
+						help: "Чем меньше число, тем выше группа в списке. По умолчанию 0",
+						defaultValue: 0,
+						name: "me-input",
+						attrs: {
+							type: "number",
+							min: -500,
+							max: 500,
+							required: true
+						}
+					},
+					{
+						id: "alias",
+						span: 6,
+						label: "Альяс",
+						help: "Текстовая подпись",
+						name: "me-input",
+						attrs: {
+							type: "text",
+							pattern: "[0-9a-z_]+",
+							min: 0,
+							max: 100
+						},
+					},
+					{
+						name: "newrow"
+					},
+					{
+						id: "salary",
+						span: 6,
+						label: "Зарплата",
+						defaultValue: 15000,
+						name: "me-input",
+						attrs: {
+							type: "number",
+							min: 5000,
+							max: 500000,
+							required: true
+						}
+					},
+					{
+						id: "is_active",
+						span: 6,
+						label: "Активный",
+						name: "me-input",
+						attrs: {
+							type: "checkbox",
+							inlineElements: false,
+							options: [
+								{
+									id: "yes",
+									name: "Виден в списках и карточках"
+								}
+							]
+						}
+					},
+					{
+						name: "me-submit",
+						attrs: {
+							value: 'Сохранить'
+						}
+					},
+
+				]
+			};
+
+		}
+
+    </script>
+</elem>
+
+<elem states="save_editGroup">
+    <template>
+		<pre>
+		{{env.sp|json}}
+		</pre>
+    </template>
+</elem>

@@ -47,7 +47,7 @@ with open(SRC_DIR + "config.yml", 'r') as stream:
                         page = {
                             'role': 'PAGE',
                             'span': 12,
-                            'boxed': False,
+                            'boxed': True,
                             'embedded': False,
                             'unlisted': False,
                             'entity_id': 244,
