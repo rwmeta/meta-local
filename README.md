@@ -1,5 +1,6 @@
 # meta-local
 Run and develop Meta app in your local computer
+![Meta platform](https://rwstatic.ru/h/meta/avatar.png)
 
 ## What is it?
 - This stub run Meta with Test PostgreSQL database into your local computer.
