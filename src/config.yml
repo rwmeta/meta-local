@@ -1,0 +1,50 @@
+main:
+  selfAppId: 1
+  name: prod
+  maxMinutesQueryDurationLimit: 10
+  jdbcTemplatePrepStatementCommandCacheLimit: 1000
+  maxUploadTotalSizeMB: 1024
+  maxUploadSizePerFileMB: 150
+  maxInMemorySizeMB: 5
+  staticDir: "/mnt/static"
+  staticBaseUrls:
+    - https://rwstatic.ru
+  extensions: []
+  mainDb:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://xxx:5432/meta?encoding=UNICODE&ApplicationName=META
+    username: xxx
+    password: xxx
+  adHandsApi:
+    url: http://api.prod.ad
+    appId: 2
+  boxedVersion: true
+
+databases:
+  todo:
+    id: 1
+    name: todo_db
+    alias: todo
+    type: Postgres
+    host: dev_db
+    port: '5432'
+    username: todo_usr
+    password: todo_pass
+    description: Тестовая БД
+
+apps:
+  todo:
+    id: 1
+    name: Todo List
+    alias: todo
+    picture_url: https://rwstatic.ru/h/icons/dev.jpg
+    category: Разработка
+    theme: universal
+    layout: universal
+    has_pages: true
+    unlisted: false
+    in_list_for_developers: false
+    acl:
+      view:
+        roles:
+          - meta.role.all

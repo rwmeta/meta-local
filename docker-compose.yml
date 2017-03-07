@@ -1,0 +1,28 @@
+version: '2'
+services:
+  dev_db:
+    image: sameersbn/postgresql:9.6-2
+    restart: always
+    environment:
+      - DEBUG=false
+      - DB_USER=todo_usr
+      - DB_PASS=todo_pass
+      - DB_NAME=todo_db
+    ports:
+      - 5432:5432
+  web:
+    image: urwmeta/app:latest
+    ports:
+      - "8089:8080"
+    volumes:
+      - ./static:/mnt/static
+      - ./build:/etc/meta
+    environment:
+      - ME_CONF_DIR=/etc/meta
+      - RELEASE_VERSION=v1.339
+      - JAVA_OPTS='-Xmx300m'
+    restart: always
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
