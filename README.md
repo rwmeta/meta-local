@@ -1,7 +1,7 @@
 # meta-local
 Run and develop Meta app in your local computer
 
-## What is?
+## What is it?
 - This stub run Meta with Test PostgreSQL database into you local computer.
 
 ## Develop
