@@ -1,4 +1,5 @@
 main:
+  isDevMode: true
   selfAppId: 1
   name: prod
   maxMinutesQueryDurationLimit: 10

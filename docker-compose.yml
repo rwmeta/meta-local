@@ -11,7 +11,7 @@ services:
     ports:
       - 5432:5432
   web:
-    image: urwmeta/app:latest
+    image: urwmeta/app:dev-latest
     ports:
       - "8089:8080"
     volumes:
