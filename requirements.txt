@@ -1,2 +1,4 @@
 pyyaml==3.12
 watchdog==0.8.3
+yoyo-migrations==5.0.5
+psycopg2

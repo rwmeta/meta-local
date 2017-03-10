@@ -8,6 +8,8 @@ Run and develop Meta app in your local computer
 
 ## Develop
 - Change code in src dir
+- Run `pip3 install -r requirements.txt`
 - Run `python build.py`
 - Run `docker-compose restart`
+- Run `yoyo apply --database postgresql://todo_usr:todo_pass@localhost/todo_db ./migrations`
 - Open http://localhost:8089/
