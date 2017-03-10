@@ -1,14 +1,12 @@
 import json
+import logging
 import os
-import urllib
+import time
+import urllib.request
 
 import yaml
-import sys
-import time
-import logging
+from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
-from watchdog.events import LoggingEventHandler, FileSystemEventHandler
-import urllib.request
 
 PAGE_PARAMS_KEYWORD = '+++\n'
 
@@ -20,7 +18,7 @@ BUILD_DIR = __DIR__ + "build/"
 
 def write_build_file(filename, contentObject):
     with open(BUILD_DIR + filename, 'w') as f:
-        out = json.dumps(contentObject, ensure_ascii=False)
+        out = json.dumps(contentObject, ensure_ascii=False, indent=2)
         f.write(out)
 
 
@@ -68,15 +66,17 @@ def build_configs():
                                 raise AssertionError("Page should have params: \n+++\nkey = value\n+++\n")
 
                             for line in lines[1:]:
+                                end_params_idx += 1
                                 if line == PAGE_PARAMS_KEYWORD:
                                     break
-                                end_params_idx += 1
                             params = yaml.load('\n'.join(lines[1:end_params_idx]))
+                            print(u"params = %s" % str(params))
                             page.update(params)
 
+                            print(u"page = %s" % str(page))
                             page['type'] = 'LEGO'
                             page['alias'] = 'p' + str(page['id'])
-                            page['command'] = '\n'.join(lines[end_params_idx:])
+                            page['command'] = '\n'.join(lines[end_params_idx + 1:])
                             pages.append(page)
             app_conf['pages'] = pages
 
@@ -85,8 +85,10 @@ def build_configs():
             print(exc)
     logging.info("Build configs...OK")
 
+
 if __name__ == "__main__":
     lastBuildIdx = -1
+
 
     class ChangeEventHandler(FileSystemEventHandler):
         buildIdx = 0
@@ -107,6 +109,7 @@ if __name__ == "__main__":
             super(ChangeEventHandler, self).on_modified(event)
             self.buildIdx += 1
 
+
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
@@ -120,7 +123,7 @@ if __name__ == "__main__":
                 lastBuildIdx = event_handler.buildIdx
                 build_configs()
                 with urllib.request.urlopen("http://localhost:8089/api/meta/dev/clear-cache") as f:
-                    print(f.read(300))
+                    pass
             time.sleep(1)
     except KeyboardInterrupt:
         observer.stop()

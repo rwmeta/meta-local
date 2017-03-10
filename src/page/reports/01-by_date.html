@@ -1,0 +1,14 @@
++++
+id:  3
+name: By date
+parent_id: 2
+parent_ids:
+  - 2
++++
+<script type="meta/sql" db-alias="todo" id="by_date" order="10" label="Todo by date" states="default"
+elem="me-chart" elem-attrs='{"type":"pie"}' span="4">
+    SELECT creation_time::date::text as date, count(1) as count
+    FROM todo
+    GROUP BY 1
+    ORDER BY 2 DESC
+</script>
