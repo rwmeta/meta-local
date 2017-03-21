@@ -13,13 +13,13 @@ services:
   web:
     image: urwmeta/app:dev-latest
     ports:
-      - "8089:8080"
+      - "9191:8080"
     volumes:
       - ./static:/mnt/static
       - ./build:/etc/meta
     environment:
       - ME_CONF_DIR=/etc/meta
-      - RELEASE_VERSION=v1.339
+      - RELEASE_VERSION=v1.350
       - JAVA_OPTS='-Xmx300m'
     restart: always
     ulimits:

@@ -10,7 +10,7 @@ from watchdog.observers import Observer
 
 PAGE_PARAMS_KEYWORD = '+++\n'
 
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 __DIR__ = os.getcwd() + "/"
 SRC_DIR = __DIR__ + "src/"
 BUILD_DIR = __DIR__ + "build/"
@@ -122,7 +122,10 @@ if __name__ == "__main__":
             if event_handler.buildIdx > lastBuildIdx:
                 lastBuildIdx = event_handler.buildIdx
                 build_configs()
-                with urllib.request.urlopen("http://localhost:8089/api/meta/dev/clear-cache") as f:
+                try:
+                    with urllib.request.urlopen("http://localhost:8089/api/meta/dev/clear-cache") as f:
+                        pass
+                except:
                     pass
             time.sleep(1)
     except KeyboardInterrupt:
